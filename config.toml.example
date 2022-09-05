@@ -1,0 +1,8 @@
+[system]
+port = ":3000"
+machineId = "1"
+
+[wallet]
+walletPath = "/root/keystore/"
+passPhrase = "passWord"
+chainId = "97"
