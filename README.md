@@ -1,9 +1,10 @@
 # spike-signature-server
+Signature service
 
 ## Build and install spike-signature-server
 1. Clone the repository
 ```shell
-cd  /root/go/src/github.com
+cd  $(go env GOPATH)/src/github.com
 git clone https://github.com/spike-engine/spike-signature-server.git
 cd  spike-signature-server
 ```
@@ -15,34 +16,52 @@ go mod tidy
 ```shell
 go build -o spike-signature-server ./main.go
 ```
-4. Startup script
+4. Update Config
+```
+cp config.toml.example config.toml
+```
+5. Run
+```
+./spike-signature-server
+```
+
+## Config 
+
+1. Config file localtion.  
+By default, spike-signature-server reads configuration from config.toml under the current folder. If it is not created, you may copy from config.config.example. If you need to specify the config file, you may set the enviornment as follows:
+```
+export ENV_CONFIG=~/spike_home/config-signature.toml
+```
+2. keystore file.  
+If spike-signature-server cannot find keystore file named *keystore.json* under folder as *walletPath* config, it will generate one for you. You may replace it with your own keystore file if needed.
+
+## Register spike as a system service
+1. Link server into system binary path
+```
+sudo ln -s ./spike-signature-server /usr/local/bin
+```
+2. Copy config file into spike home
+```
+sudo mkdir -p /etc/spike/
+sudo cp ./config.toml /etc/spike/config-signature.toml
+```
+3. Startup script
 ```shell
-vim /etc/systemd/system/spike-signature-server.service
+sudo vim /etc/systemd/system/spike-signature-server.service
 ```
 Specify the path to the binary
-```markdown
+```ini
 [Service] 
-ExecStart=/root/go/src/github.com/spike-blockchain-server/spike-frame-server
-Environment=CONFIG_PATH=/etc/config.toml
+ExecStart=/usr/local/bin/spike-signature-server
+Environment=ENV_CONFIG=/etc/spike/config-signature.toml
 Restart=always
 RestartSec=5
 ```
 ```shell
 systemctl daemon-reload
-systemctl start spike-frame-server
+systemctl start spike-signature-server
 ```
 Check Program Exec Log 
 ```shell
 journalctl -u spike-signature-server.service  -f 
 ```
-
-Of course, you can click the build icon in your IDE to run the project instead of startup script.
-But, we recommend using system script in mainnet.
-
-### config
-If you don't specify the path to the configuration file in the environment variable in the startup script,
-config.toml is the default.And config.toml is also a demo.
-
-You should configure some information about system port, GM wallet.
-
-Regarding GM wallet, if you don't prepare keystore.json in advance, the program will be automatically generated according to your configuration.
