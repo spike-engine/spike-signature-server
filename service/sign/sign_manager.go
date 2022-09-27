@@ -3,12 +3,11 @@ package sign
 import (
 	"_spike-signature-server/config"
 	"encoding/json"
-	"errors"
 	"github.com/ethereum/go-ethereum/accounts/abi/bind"
-	"github.com/ethereum/go-ethereum/accounts/keystore"
 	"github.com/ethereum/go-ethereum/core/types"
 	logger "github.com/ipfs/go-log"
 	"math/big"
+	"os"
 )
 
 var log = logger.Logger("sign")
@@ -19,18 +18,12 @@ type SignatureManager struct {
 
 func New() (*SignatureManager, error) {
 
-	ks := keystore.NewKeyStore(config.Cfg.Wallet.WalletPath, keystore.StandardScryptN, keystore.StandardScryptP)
-	if len(ks.Accounts()) > 1 {
-		return nil, errors.New("===Spike log: walletPath exist more than one json")
-	}
-
-	err := ks.Unlock(ks.Accounts()[0], config.Cfg.Wallet.PassPhrase)
+	walletPath, err := os.Open(config.Cfg.Wallet.WalletFolder + config.Cfg.Wallet.WalletFile)
 	if err != nil {
-		log.Error("===Spike log:", err)
-		return nil, err
+		panic(err)
 	}
 
-	transactOpts, err := bind.NewKeyStoreTransactorWithChainID(ks, ks.Accounts()[0], big.NewInt(config.Cfg.Wallet.ChainId))
+	transactOpts, err := bind.NewTransactorWithChainID(walletPath, config.Cfg.Wallet.PassPhrase, big.NewInt(config.Cfg.Wallet.ChainId))
 	if err != nil {
 		log.Error("===Spike log:", err)
 		return nil, err

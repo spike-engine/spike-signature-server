@@ -14,9 +14,10 @@ type Config struct {
 }
 
 type Wallet struct {
-	WalletPath string `toml:"walletPath"`
-	PassPhrase string `toml:"passPhrase"`
-	ChainId    int64  `toml:"chainId"`
+	WalletFolder string `toml:"walletFolder"`
+	WalletFile   string `toml:"walletFile"`
+	PassPhrase   string `toml:"passPhrase"`
+	ChainId      int64  `toml:"chainId"`
 }
 
 type System struct {

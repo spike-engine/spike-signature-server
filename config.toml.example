@@ -4,5 +4,6 @@ machineId = "1"
 
 [wallet]
 walletPath = "/root/keystore/"
+walletFile = "test.json"
 passPhrase = "passWord"
 chainId = "97"

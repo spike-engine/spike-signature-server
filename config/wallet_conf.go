@@ -1,14 +1,29 @@
 package config
 
-import "github.com/ethereum/go-ethereum/accounts/keystore"
+import (
+	"github.com/ethereum/go-ethereum/accounts/keystore"
+	"os"
+	"strings"
+)
 
 func InitWallet() {
+	if !strings.HasSuffix(Cfg.Wallet.WalletFolder, "/") {
+		Cfg.Wallet.WalletFolder = Cfg.Wallet.WalletFolder + "/"
+	}
 
-	ks := keystore.NewKeyStore(Cfg.Wallet.WalletPath, keystore.StandardScryptN, keystore.StandardScryptP)
-	if len(ks.Accounts()) == 0 {
-		_, err := ks.NewAccount(Cfg.Wallet.PassPhrase)
+	_, err := os.Open(Cfg.Wallet.WalletFolder + Cfg.Wallet.WalletFile)
+	if err != nil {
+		ks := keystore.NewKeyStore(Cfg.Wallet.WalletFolder, keystore.StandardScryptN, keystore.StandardScryptP)
+		account, err := ks.NewAccount(Cfg.Wallet.PassPhrase)
 		if err != nil {
 			panic(err)
 		}
+		log.Info(account.URL.Scheme, "---", account.URL.Path, "---", Cfg.Wallet.WalletFolder+Cfg.Wallet.WalletFile)
+		err = os.Rename(account.URL.Path, Cfg.Wallet.WalletFolder+Cfg.Wallet.WalletFile)
+		if err != nil {
+			panic(err)
+		}
+
 	}
+
 }
