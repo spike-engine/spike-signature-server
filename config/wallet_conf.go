@@ -18,7 +18,6 @@ func InitWallet() {
 		if err != nil {
 			panic(err)
 		}
-		log.Info(account.URL.Scheme, "---", account.URL.Path, "---", Cfg.Wallet.WalletFolder+Cfg.Wallet.WalletFile)
 		err = os.Rename(account.URL.Path, Cfg.Wallet.WalletFolder+Cfg.Wallet.WalletFile)
 		if err != nil {
 			panic(err)
