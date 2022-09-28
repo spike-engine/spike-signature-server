@@ -40,7 +40,7 @@ To run multiple signature services, you may assign each server a different machi
 ## Register spike as a system service
 1. Link server into system binary path
 ```
-sudo ln -s ./spike-signature-server /usr/local/bin
+sudo ln ./spike-signature-server /usr/local/bin
 ```
 2. Copy config file into spike home
 ```
@@ -60,10 +60,10 @@ Restart=always
 RestartSec=5
 ```
 ```shell
-systemctl daemon-reload
-systemctl start spike-signature-server
+sudo systemctl daemon-reload
+sudo systemctl start spike-signature-server
 ```
 Check Program Exec Log 
 ```shell
-journalctl -u spike-signature-server.service  -f 
+sudo journalctl -u spike-signature-server.service  -f 
 ```
