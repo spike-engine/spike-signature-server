@@ -1,0 +1,5 @@
+spike-signature-server
+go.sum
+config.toml
+.idea
+keystore

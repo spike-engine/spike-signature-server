@@ -2,5 +2,5 @@ package constant
 
 const (
 	ConfigFile = "config.toml"
-	ConfigEnv  = "ENV_CONFIG"
+	ConfigEnv  = "SPIKE_SIGNATURE_CONFIG"
 )
