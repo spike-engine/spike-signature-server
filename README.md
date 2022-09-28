@@ -30,7 +30,7 @@ cp config.toml.example config.toml
 1. Config file localtion.  
 By default, spike-signature-server reads configuration from config.toml under the current folder. If it is not created, you may copy from config.config.example. If you need to specify the config file, you may set the enviornment as follows:
 ```
-export ENV_CONFIG=~/spike_home/config-signature.toml
+export SPIKE_SIGNATURE_CONFIG=~/spike_home/config-signature.toml
 ```
 2. keystore file.  
 If spike-signature-server cannot find keystore file with *walletFile* config under folder with *walletFolder* config, it will generate one for you. You may replace it with your own keystore file if needed.
@@ -55,7 +55,7 @@ Specify the path to the binary
 ```ini
 [Service] 
 ExecStart=/usr/local/bin/spike-signature-server
-Environment=ENV_CONFIG=/etc/spike/config-signature.toml
+Environment=SPIKE_SIGNATURE_CONFIG=/etc/spike/config-signature.toml
 Restart=always
 RestartSec=5
 ```
