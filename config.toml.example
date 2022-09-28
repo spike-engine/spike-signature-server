@@ -1,9 +1,9 @@
 [system]
-port = ":3000"
+port = ":3100"
 machineId = "1"
 
 [wallet]
-walletPath = "/root/keystore/"
-walletFile = "test.json"
+walletFolder = "./keystore/"
+walletFile = "keystore.json"
 passPhrase = "passWord"
 chainId = "97"
