@@ -33,7 +33,9 @@ By default, spike-signature-server reads configuration from config.toml under th
 export ENV_CONFIG=~/spike_home/config-signature.toml
 ```
 2. keystore file.  
-If spike-signature-server cannot find keystore file named *keystore.json* under folder as *walletPath* config, it will generate one for you. You may replace it with your own keystore file if needed.
+If spike-signature-server cannot find keystore file with *walletFile* config under folder with *walletFolder* config, it will generate one for you. You may replace it with your own keystore file if needed.
+3. Machine ID  
+To run multiple signature services, you may assign each server a different machine ID with *machineId* config.
 
 ## Register spike as a system service
 1. Link server into system binary path
