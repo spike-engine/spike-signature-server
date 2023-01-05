@@ -22,7 +22,7 @@ cp config.toml.example config.toml
 ```
 5. Run
 ```
-./spike-signature-server
+./spike-signature-server start
 ```
 
 ## Config 
@@ -33,14 +33,14 @@ By default, spike-signature-server reads configuration from config.toml under th
 export SPIKE_SIGNATURE_CONFIG=~/spike_home/config-signature.toml
 ```
 2. keystore file.  
-If spike-signature-server cannot find keystore file with *walletFile* config under folder with *walletFolder* config, it will generate one for you. You may replace it with your own keystore file if needed.
+If spike-signature-server cannot find keystore file with *walletFile* config under folder with *walletFolder* config, you can use spike-signature-server cli generate one.(example: ./spike-signature-server wallet add) You also can  replace it with your own keystore file if needed.
 3. Machine ID  
 To run multiple signature services, you may assign each server a different machine ID with *machineId* config.
 
 ## Register spike as a system service
 1. Link server into system binary path
 ```
-sudo ln -s ./spike-signature-server /usr/local/bin
+sudo ln ./spike-signature-server /usr/local/bin
 ```
 2. Copy config file into spike home
 ```
@@ -54,16 +54,16 @@ sudo vim /etc/systemd/system/spike-signature-server.service
 Specify the path to the binary
 ```ini
 [Service] 
-ExecStart=/usr/local/bin/spike-signature-server
+ExecStart=/usr/local/bin/spike-signature-server start
 Environment=SPIKE_SIGNATURE_CONFIG=/etc/spike/config-signature.toml
 Restart=always
 RestartSec=5
 ```
 ```shell
-systemctl daemon-reload
-systemctl start spike-signature-server
+sudo systemctl daemon-reload
+sudo systemctl start spike-signature-server
 ```
 Check Program Exec Log 
 ```shell
-journalctl -u spike-signature-server.service  -f 
+sudo journalctl -u spike-signature-server.service  -f 
 ```
