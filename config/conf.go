@@ -9,8 +9,13 @@ var log = logger.Logger("config")
 var Cfg Config
 
 type Config struct {
-	Wallet Wallet `toml:"wallet"`
-	System System `toml:"system"`
+	Wallet         Wallet         `toml:"Wallet"`
+	System         System         `toml:"System"`
+	TxApiWhiteList TxApiWhiteList `toml:"TxApiWhiteList"`
+}
+
+type TxApiWhiteList struct {
+	IpList []string `toml:"ipList"`
 }
 
 type Wallet struct {

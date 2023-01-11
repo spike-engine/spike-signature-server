@@ -1,6 +1,7 @@
 package txApi
 
 import (
+	"_spike-signature-server/middleware"
 	"_spike-signature-server/request"
 	"_spike-signature-server/response"
 	"_spike-signature-server/service/sign"
@@ -27,7 +28,7 @@ func NewTxGroup() (TxGroup, error) {
 }
 
 func (api *TxGroup) InitTxGroup(g *gin.RouterGroup) {
-	g.Use()
+	g.Use(middleware.WhiteListAuth())
 	tx := g.Group("tx")
 	{
 		tx.POST("/signature", api.SignatureTransaction)

@@ -7,3 +7,6 @@ walletFolder = "./keystore/"
 walletFile = "keystore.json"
 passPhrase = "passWord"
 chainId = "97"
+
+[TxApiWhiteList]
+ipList = ["127.0.0.1"]
